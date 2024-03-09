@@ -14,11 +14,19 @@ spec:
       containers:
       - name: postgres
         image: postgres:latest
+        ports:
+        - containerPort: 5432
         env:
+        - name: POSTGRES_DB
+          value: "yourdbname"
+        - name: POSTGRES_USER
+          value: "yourdbuser"
         - name: POSTGRES_PASSWORD
           valueFrom:
             secretKeyRef:
               name: postgres-secret
               key: password
-        ports:
-        - containerPort: 5432
+      volumes:
+      - name: postgres-storage
+        persistentVolumeClaim:
+          claimName: postgres-pvc
