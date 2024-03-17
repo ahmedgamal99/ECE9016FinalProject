@@ -12,7 +12,13 @@ spec:
         app: nginx
     spec:
       containers:
-      - name: nginx
-        image: nginx:alpine
+      - name: nextjs-app
+        image: gcr.io/ece9016/nextjs-app  
         ports:
-        - containerPort: 80
+        - containerPort: 3000              
+        env:
+        - name: DATABASE_URL               
+          value: "postgresql://$(POSTGRES_USER):$(POSTGRES_PASSWORD)@postgres-service:5432/$(POSTGRES_DB)"
+        envFrom:                           
+        - secretRef:
+            name: postgres-secret
