@@ -1,0 +1,31 @@
+version: "3"
+
+services:
+  # PostgreSQL Service
+  postgres:
+    image: postgres:latest # Use the latest PostgreSQL image
+    environment:
+      POSTGRES_DB: test
+      POSTGRES_USER: test
+      POSTGRES_PASSWORD: test
+
+  # Next.js App Service
+  nextjs-app:
+    build: .
+    volumes:
+      - ./:/app:delegated
+    ports:
+      - "3000:3000"
+    depends_on:
+      - postgres
+    command: sh -c "npx prisma migrate dev && npm run dev"
+
+  # Nginx Service
+  nginx:
+    image: nginx:latest
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      - nextjs-app
