@@ -1,0 +1,33 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: database-setup
+spec:
+  template:
+    spec:
+      containers:
+      - name: db-setup
+        image: postgres:latest
+        command: ["psql"]
+        args:
+        - "-c"
+        - "CREATE TABLE IF NOT EXISTS \"Name\" (id SERIAL PRIMARY KEY, name VARCHAR(255) NOT NULL);"
+        env:
+        - name: PGPASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: postgres-secret
+              key: password
+        - name: PGUSER
+          valueFrom:
+            secretKeyRef:
+              name: postgres-secret
+              key: username
+        - name: PGDATABASE
+          valueFrom:
+            secretKeyRef:
+              name: postgres-secret
+              key: dbname
+        - name: PGHOST
+          value: postgres-service
+      restartPolicy: OnFailure
