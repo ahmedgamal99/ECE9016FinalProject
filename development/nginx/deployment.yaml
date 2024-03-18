@@ -13,7 +13,7 @@ spec:
     spec:
       containers:
       - name: nextjs-app
-        image: gcr.io/ece9016/nextjs-app:v8
+        image: gcr.io/ece9016/nextjs-app:v9
         ports:
         - containerPort: 3000
         env:
@@ -22,21 +22,18 @@ spec:
         - name: POSTGRES_HOST
           value: "postgres-service"
         - name: DATABASE_URL
+          value: "postgresql://${db_username}:${db_password}@${POSTGRES_HOST}:5432/${db_name}"
+        - name: db_name
           valueFrom:
-            configMapKeyRef:
-              name: postgres-configmap
-              key: DATABASE_URL
-        - name: DB_NAME
-          valueFrom:
-            configMapKeyRef:
-              name: postgres-configmap
-              key: DB_NAME
-        - name: DB_USERNAME
+            secretKeyRef:
+              name: postgres-secret
+              key: dbname
+        - name: db_username
           valueFrom:
             secretKeyRef:
               name: postgres-secret
               key: username
-        - name: DB_PASSWORD
+        - name: db_password
           valueFrom:
             secretKeyRef:
               name: postgres-secret
