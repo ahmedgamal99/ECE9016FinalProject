@@ -13,7 +13,7 @@ spec:
     spec:
       containers:
       - name: nextjs-app
-        image: gcr.io/ece9016/nextjs-app:v2  
+        image: gcr.io/ece9016/nextjs-app:v3  
         ports:
         - containerPort: 3000              
         env:
