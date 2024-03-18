@@ -1,8 +1,6 @@
 # base image
 FROM node:alpine
 
-ENV DATABASE_URL=postgresql://test:test@postgres:5432/test
-
 # create & set working directory
 RUN mkdir -p /usr/src
 WORKDIR /usr/src
@@ -10,21 +8,24 @@ WORKDIR /usr/src
 # copy source files
 COPY . /usr/src
 
+# Install dependencies
 COPY package*.json ./
 COPY prisma ./prisma/
-
-#RUN apt-get -qy update && apt-get -qy install openssl
-
-# install dependencies
 RUN npm install
-
 RUN npm install @prisma/client
 
-COPY . .
+# Generate Prisma client
 RUN npx prisma generate --schema ./prisma/schema.prisma
-#RUN npx prisma migrate dev
-# start app
+
+# Build the application
 RUN npm run build
+
+# Expose port 3000
 EXPOSE 3000
-#CMD npm run dev
-CMD ["npm", "run", "start"]
+
+# Copy the startup script
+COPY start.sh /usr/src/start.sh
+RUN chmod +x /usr/src/start.sh
+
+# Use the startup script as the entrypoint
+CMD ["/usr/src/start.sh", "npm", "run", "start"]
