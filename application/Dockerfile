@@ -14,6 +14,9 @@ COPY prisma ./prisma/
 RUN npm install
 RUN npm install @prisma/client
 
+# Set DATABASE_URL environment variable
+ENV DATABASE_URL="postgresql://postgres:X9z@4bV!eU2wM8yP@postgres-service:5432/postgres-db"
+
 # Generate Prisma client
 RUN npx prisma generate --schema ./prisma/schema.prisma
 
