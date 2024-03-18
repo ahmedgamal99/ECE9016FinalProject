@@ -13,14 +13,14 @@ spec:
     spec:
       containers:
       - name: nextjs-app
-        image: gcr.io/ece9016/nextjs-app:v4  
+        image: gcr.io/ece9016/nextjs-app:v4
         ports:
-        - containerPort: 3000              
+        - containerPort: 3000
         env:
         - name: NODE_ENV
           value: "production"
-        - name: DATABASE_URL               
-          value: "postgresql://$(POSTGRES_USER):$(POSTGRES_PASSWORD)@postgres-service:5432/$(POSTGRES_DB)"
-        envFrom:                           
+        - name: POSTGRES_HOST
+          value: "postgres-service"
+        envFrom:
         - secretRef:
             name: postgres-secret
