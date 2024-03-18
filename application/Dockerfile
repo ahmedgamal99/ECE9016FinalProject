@@ -20,8 +20,6 @@ ENV DATABASE_URL="postgresql://postgres:X9z@4bV!eU2wM8yP@postgres-service:5432/p
 # Generate Prisma client
 RUN npx prisma generate --schema ./prisma/schema.prisma
 
-# Apply migrations
-RUN npx prisma migrate deploy --schema ./prisma/schema.prisma
 
 # Build the application
 RUN npm run build
