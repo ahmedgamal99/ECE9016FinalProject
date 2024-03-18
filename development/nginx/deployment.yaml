@@ -21,6 +21,8 @@ spec:
           value: "production"
         - name: POSTGRES_HOST
           value: "postgres-service"
+        - name: DATABASE_URL
+          value: "postgresql://${username}:${password}@${POSTGRES_HOST}:5432/${dbname}"
         envFrom:
         - secretRef:
             name: postgres-secret
