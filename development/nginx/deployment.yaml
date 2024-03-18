@@ -17,6 +17,8 @@ spec:
         ports:
         - containerPort: 3000              
         env:
+        - name: NODE_ENV
+          value: "production"
         - name: DATABASE_URL               
           value: "postgresql://$(POSTGRES_USER):$(POSTGRES_PASSWORD)@postgres-service:5432/$(POSTGRES_DB)"
         envFrom:                           
