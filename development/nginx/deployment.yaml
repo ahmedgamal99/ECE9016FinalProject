@@ -22,7 +22,8 @@ spec:
         - name: POSTGRES_HOST
           value: "postgres-service"
         - name: DATABASE_URL
-          value: "postgresql://${db_username}:${db_password}@${POSTGRES_HOST}:5432/${db_name}"
+          # value: "postgresql://${db_username}:${db_password}@${POSTGRES_HOST}:5432/${db_name}"
+          value: "postgresql://postgres:X9z@4bV!eU2wM8yP@postgres-service:5432/postgres-db"
         - name: db_name
           valueFrom:
             secretKeyRef:
