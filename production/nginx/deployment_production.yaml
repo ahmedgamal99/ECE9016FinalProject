@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: nextjs-app
-        image: gcr.io/ece9016/nextjs-app:v14
+        image: gcr.io/quick-charger-418202/nextjs-app:v1
         ports:
         - containerPort: 3000
         env:
