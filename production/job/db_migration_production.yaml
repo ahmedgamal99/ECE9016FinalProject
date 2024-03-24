@@ -33,3 +33,18 @@ spec:
         image: postgres:latest
         name: db-setup
       restartPolicy: OnFailure
+      tolerations:
+      - key: "app"
+        operator: "Equal"
+        value: "db"
+        effect: "NoSchedule"
+      affinity:
+        podAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchExpressions:
+              - key: "app"
+                operator: In
+                values:
+                - "db"
+            topologyKey: "kubernetes.io/hostname"
